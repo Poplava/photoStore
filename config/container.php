@@ -19,4 +19,8 @@ $container['rabbit'] = function ($c) {
     );
 };
 
+$container['scanService'] = function ($c) {
+    return new \Services\Scan\Scan();
+};
+
 return $container;
