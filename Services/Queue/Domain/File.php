@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Publish\Domain;
+namespace Services\Queue\Domain;
 
 class File
 {

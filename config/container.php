@@ -25,17 +25,22 @@ $container['scanService'] = function ($c) {
     );
 };
 
-$container['publishService'] = function ($c) {
-    return new \Services\Publish\Publish(
+$container['queueService'] = function ($c) {
+    return new \Services\Queue\Queue(
         $c['queueManager'],
-        $c['config']['rabbitmq']['queues']['scan']
+        $c['config']['rabbitmq']['queues']['scan'],
+        $c['pictureStoreService']
     );
 };
 
-$container['processService'] = function ($c) {
-    return new \Services\Process\Process(
-        $c['queueManager']
+$container['pictureStoreService'] = function ($c) {
+    return new \Services\PictureStore\PictureStore(
     );
 };
 
+ActiveRecord\Config::initialize(function ($cfg) {
+    $cfg->set_connections([
+        'development' => 'mysql://root@localhost/photoStore'
+    ]);
+});
 return $container;

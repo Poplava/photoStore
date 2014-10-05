@@ -9,11 +9,11 @@ class Scan extends \System\Command
     public function run()
     {
         $scanService = self::$container['scanService'];
-        $publishService = self::$container['publishService'];
+        $queue = self::$container['queueService'];
         $files = $scanService->getFiles($this->args[0]);
 
-        $publishService->publish($files);
+        $queue->publish($files);
 
-        print "\nPublished " . count($files) . " file(s).\n";
+        print "\n[x] Published " . count($files) . " file(s).\n";
     }
 }

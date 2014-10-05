@@ -8,6 +8,7 @@
     ],
     "require": {
         "videlalvaro/php-amqplib": "v2.1.0",
-        "pimple/pimple": "~3.0"
+        "pimple/pimple": "~3.0",
+        "php-activerecord/php-activerecord": "~1.1"
     }
 }
