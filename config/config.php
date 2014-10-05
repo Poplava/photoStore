@@ -9,5 +9,12 @@ return [
         'queues' => [
             'scan' => 'photoStoreScan',
         ],
+    ],
+    'fileExt' => [
+        'jpg',
+        'jpeg',
+        'JPG',
+        'JPEG',
+        'png',
     ]
 ];

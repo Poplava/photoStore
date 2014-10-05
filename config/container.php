@@ -10,8 +10,8 @@ $container['config'] = function () use ($config) {
     return $config;
 };
 
-$container['rabbit'] = function ($c) {
-    return new \PhpAmqpLib\Connection\AMQPConnection(
+$container['queueManager'] = function ($c) {
+    return new \Services\QueueManager\QueueManager(
         $c['config']['rabbitmq']['host'],
         $c['config']['rabbitmq']['port'],
         $c['config']['rabbitmq']['user'],
@@ -20,7 +20,22 @@ $container['rabbit'] = function ($c) {
 };
 
 $container['scanService'] = function ($c) {
-    return new \Services\Scan\Scan();
+    return new \Services\Scan\Scan(
+        $c['config']
+    );
+};
+
+$container['publishService'] = function ($c) {
+    return new \Services\Publish\Publish(
+        $c['queueManager'],
+        $c['config']['rabbitmq']['queues']['scan']
+    );
+};
+
+$container['processService'] = function ($c) {
+    return new \Services\Process\Process(
+        $c['queueManager']
+    );
 };
 
 return $container;

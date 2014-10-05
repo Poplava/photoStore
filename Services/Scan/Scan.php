@@ -4,9 +4,13 @@ namespace Services\Scan;
 
 class Scan
 {
-    public function __construct()
-    {
+    private $fileExt = [];
 
+    public function __construct($config)
+    {
+        if (isset($config['fileExt'])) {
+            $this->fileExt = $config['fileExt'];
+        }
     }
 
     /**
@@ -18,11 +22,12 @@ class Scan
     public function getFiles($path)
     {
         if (is_dir($path)) {
-            return $this->iterate($path);
+            return $this->filter($this->iterate($path));
         }
 
         if (is_file($path)) {
-            return [realpath($path)];
+            $files = [new \SplFileInfo($path)];
+            return $this->filter($files);
         }
 
         throw new \Exception('Dir not found');
@@ -42,5 +47,22 @@ class Scan
         }
 
         return $files;
+    }
+
+    /**
+     * @param array $files
+     *
+     * @return array $out
+     */
+    private function filter(array $files)
+    {
+        $out = [];
+        foreach ($files as $file) {
+            if (in_array($file->getExtension(), $this->fileExt)) {
+                $out[] = $file;
+            }
+        }
+
+        return $out;
     }
 }
