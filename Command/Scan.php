@@ -3,6 +3,7 @@ namespace Command;
 
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+use Services\PictureStore\Model\Picture;
 
 class Scan extends \System\Command
 {

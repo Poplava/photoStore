@@ -16,5 +16,7 @@ return [
         'JPG',
         'JPEG',
         'png',
-    ]
+    ],
+    'photoDir' => '/home/poplava/Test/Photos',
+    'trunkDir' => '/home/poplava/Test/Trunk'
 ];

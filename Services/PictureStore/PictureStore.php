@@ -7,10 +7,15 @@ use Services\PictureStore\Model\Picture;
 
 class PictureStore
 {
+    public $photoDir;
+    public $trunkDir;
+
     public function __construct(
-
+        $photoDir,
+        $trunkDir
     ) {
-
+        $this->photoDir = $photoDir;
+        $this->trunkDir = $trunkDir;
     }
 
     public function process($filename)
@@ -21,7 +26,7 @@ class PictureStore
             return true;
         }
 
-        $pictureDomain = new PictureDomain($filename);
+        $pictureDomain = new PictureDomain($filename, $this->photoDir, $this->trunkDir);
 
         $picture = Picture::find([
             'hash' => $pictureDomain->hash
@@ -30,6 +35,9 @@ class PictureStore
         if (empty($picture)) {
             $pictureDomain->fill();
             $picture = new Picture(get_object_vars($pictureDomain));
+            if (!$pictureDomain->saveFile()) {
+                return false;
+            }
             $picture->save();
         }
 

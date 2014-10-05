@@ -35,6 +35,8 @@ $container['queueService'] = function ($c) {
 
 $container['pictureStoreService'] = function ($c) {
     return new \Services\PictureStore\PictureStore(
+        $c['config']['photoDir'],
+        $c['config']['trunkDir']
     );
 };
 

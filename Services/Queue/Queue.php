@@ -55,7 +55,12 @@ class Queue
         }
 
         if ($ack) {
-            print "[x] Stored " . $ack->sourcefile . "\n";
+            if (isset($ack->file)) {
+                print "[x] Stored " . $ack->sourcefile . " => " . $ack->file . "\n";
+            } else {
+                print "[x] Skipped\n";
+            }
+
             QueueManager::ackMessage($message);
         }
     }
